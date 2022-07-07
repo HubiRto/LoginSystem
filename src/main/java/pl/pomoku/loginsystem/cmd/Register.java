@@ -1,5 +1,6 @@
 package pl.pomoku.loginsystem.cmd;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -31,6 +32,8 @@ public class Register implements CommandExecutor {
                 if(players_info == null) {
                     players_info = new Players(p.getUniqueId().toString(), p.getDisplayName(), p.getAddress().getHostName(), null, false, args[0], new Date(), false, 0, 0, 0);
                     this.plugin.getDatabase().createPlayers(players_info);
+                }else {
+                    p.sendMessage(ChatColor.RED + "Masz juz konto!");
                 }
             }catch (SQLException exception){
                 exception.printStackTrace();
