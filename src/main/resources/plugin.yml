@@ -4,3 +4,5 @@ main: pl.pomoku.loginsystem.LoginSystem
 api-version: 1.19
 authors: [ HubiRto ]
 description: System logowania na serwer
+commands:
+  register:

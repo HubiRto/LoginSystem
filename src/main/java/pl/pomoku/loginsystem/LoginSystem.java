@@ -1,6 +1,7 @@
 package pl.pomoku.loginsystem;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import pl.pomoku.loginsystem.cmd.Register;
 import pl.pomoku.loginsystem.db.Database;
 import pl.pomoku.loginsystem.events.OnJoin;
 
@@ -18,6 +19,7 @@ public final class LoginSystem extends JavaPlugin {
             System.out.println("Unable to connect to database and create tables.");
             ex.printStackTrace();
         }
+        new Register(this);
         getServer().getPluginManager().registerEvents(new OnJoin(this), this);
     }
 

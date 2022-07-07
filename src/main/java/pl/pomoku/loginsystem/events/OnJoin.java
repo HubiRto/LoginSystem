@@ -25,11 +25,9 @@ public class OnJoin implements Listener {
             Players players_info =  this.plugin.getDatabase().findPlayerByUUID(p.getUniqueId().toString());
 
             if(players_info == null){
-                players_info = new Players(p.getUniqueId().toString(), p.getDisplayName(), p.getAddress().getHostName(), null, false, "", new Date(), false, 0, 0, 0);
-                this.plugin.getDatabase().createPlayers(players_info);
+                p.sendMessage("/register haslo powtorz_haslo");
             }else {
-                players_info.setIp(players_info.getIp() + "a");
-                this.plugin.getDatabase().updatePlayers(players_info);
+                p.sendMessage("/login haslo");
             }
         }catch (SQLException exception){
             exception.printStackTrace();
