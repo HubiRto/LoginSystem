@@ -30,8 +30,12 @@ public class Register implements CommandExecutor {
                 Players players_info =  this.plugin.getDatabase().findPlayerByUUID(p.getUniqueId().toString());
 
                 if(players_info == null) {
-                    players_info = new Players(p.getUniqueId().toString(), p.getDisplayName(), p.getAddress().getHostName(), null, false, args[0], new Date(), false, 0, 0, 0);
-                    this.plugin.getDatabase().createPlayers(players_info);
+                    if(args[0].equals(args[1])) {
+                        players_info = new Players(p.getUniqueId().toString(), p.getDisplayName(), p.getAddress().getHostName(), null, false, args[0], new Date(), false, 0, 0, 0);
+                        this.plugin.getDatabase().createPlayers(players_info);
+                    }else {
+                        p.sendMessage(ChatColor.RED + "Hasla nie sa identyczne!");
+                    }
                 }else {
                     p.sendMessage(ChatColor.RED + "Masz juz konto!");
                 }
