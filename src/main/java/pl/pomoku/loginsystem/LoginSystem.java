@@ -27,7 +27,7 @@ public final class LoginSystem extends JavaPlugin {
         }
         try{
             Statement statement = con.createStatement();
-            String sql = "CREATE TABLE IF NOT EXIST players(uuid int)";
+            String sql = "CREATE TABLE IF NOT EXIST players(uuid TEXT, player_name TEXT, ip TEXT, email TEXT, email_confirm BOOLEAN, password TEXT, sign_in_date DATE, ban BOOLEAN, last_x DOUBLE, last_y DOUBLE, last_z DOUBLE)";
             statement.execute(sql);
             statement.close();
             con.close();
