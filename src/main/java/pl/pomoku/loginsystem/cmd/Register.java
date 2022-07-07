@@ -1,5 +1,6 @@
 package pl.pomoku.loginsystem.cmd;
 
+import com.google.common.hash.Hashing;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import pl.pomoku.loginsystem.LoginSystem;
 import pl.pomoku.loginsystem.models.Players;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Objects;
@@ -31,7 +33,8 @@ public class Register implements CommandExecutor {
 
                 if(players_info == null) {
                     if(args[0].equals(args[1])) {
-                        players_info = new Players(p.getUniqueId().toString(), p.getDisplayName(), p.getAddress().getHostName(), null, false, args[0], new Date(), false, 0, 0, 0);
+                        String sha256hex = Hashing.sha256().hashString(args[0], StandardCharsets.UTF_8).toString();
+                        players_info = new Players(p.getUniqueId().toString(), p.getDisplayName(), p.getAddress().getHostName(), null, false, sha256hex, new Date(), false, 0, 0, 0);
                         this.plugin.getDatabase().createPlayers(players_info);
                         p.sendMessage(ChatColor.GREEN + "Stworzyles konto!");
                     }else {
