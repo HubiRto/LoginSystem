@@ -3,6 +3,7 @@ package pl.pomoku.loginsystem.cmd;
 import com.google.common.hash.Hashing;
 import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -41,6 +42,15 @@ public class Login implements CommandExecutor {
                         if (!OnJoin.LoggedIn.get(uuid)) {
                             String sha256hex = Hashing.sha256().hashString(args[0], StandardCharsets.UTF_8).toString();
                             if (Objects.equals(players_info.getPassword(), sha256hex)) {
+
+                                Location location = p.getLocation();
+                                location.setX(players_info.getLast_x());
+                                location.setY(players_info.getLast_y());
+                                location.setZ(players_info.getLast_z());
+                                if(location != null) {
+                                    p.teleport(location);
+                                }
+
                                 p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Zostales pomyslnie zalogowany.");
                                 p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Nacisnij klawisz " + ChatColor.GRAY + "SHIFT" + ChatColor.GREEN + ", aby zapamietac logowanie na " + ChatColor.GRAY + "3 dni" + ChatColor.GREEN + ".");
                                 p.removePotionEffect(PotionEffectType.BLINDNESS);
