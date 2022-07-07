@@ -5,6 +5,7 @@ import pl.pomoku.loginsystem.cmd.Login;
 import pl.pomoku.loginsystem.cmd.Register;
 import pl.pomoku.loginsystem.db.Database;
 import pl.pomoku.loginsystem.events.OnJoin;
+import pl.pomoku.loginsystem.events.OnMove;
 
 import java.sql.SQLException;
 
@@ -25,6 +26,7 @@ public final class LoginSystem extends JavaPlugin {
         new Login(this);
 
         getServer().getPluginManager().registerEvents(new OnJoin(this), this);
+        getServer().getPluginManager().registerEvents(new OnMove(this), this);
     }
 
     public Database getDatabase() {
