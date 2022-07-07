@@ -1,45 +1,27 @@
 package pl.pomoku.loginsystem;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import pl.pomoku.loginsystem.db.Database;
+import pl.pomoku.loginsystem.events.OnJoin;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public final class LoginSystem extends JavaPlugin {
 
+    Database database;
     @Override
     public void onEnable() {
-
-        String url = "jdbc:mysql://localhost/users";
-        String user = "root";
-        String password = "";
-
-        Connection con = null;
-
         try{
-            con = DriverManager.getConnection(url, user, password);
-            System.out.println("Connected to the Users Database.");
-        }catch (SQLException e){
-            System.out.println("Unable to connect to the Users Database.");
-            e.printStackTrace();
+            this.database = new Database();
+            database.initializeDatabase();
+        }catch (SQLException ex){
+            System.out.println("Unable to connect to database and create tables.");
+            ex.printStackTrace();
         }
-        try{
-            Statement statement = con.createStatement();
-            String sql = "CREATE TABLE IF NOT EXIST players(uuid TEXT, player_name TEXT, ip TEXT, email TEXT, email_confirm BOOLEAN, password TEXT, sign_in_date DATE, ban BOOLEAN, last_x DOUBLE, last_y DOUBLE, last_z DOUBLE)";
-            statement.execute(sql);
-            statement.close();
-            con.close();
-            System.out.println("Create the players table in the database.");
-        }catch (SQLException e){
-            System.out.println("Unable to create the players table in the database.");
-            e.printStackTrace();
-        }
+        getServer().getPluginManager().registerEvents(new OnJoin(this), this);
     }
 
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
+    public Database getDatabase() {
+        return database;
     }
 }
