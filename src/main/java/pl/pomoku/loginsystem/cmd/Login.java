@@ -1,5 +1,6 @@
 package pl.pomoku.loginsystem.cmd;
 
+import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,13 +14,13 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.Objects;
 
-public class Register implements CommandExecutor {
+public class Login implements CommandExecutor {
     private final LoginSystem plugin;
 
 
-    public Register(LoginSystem plugin) {
+    public Login(LoginSystem plugin) {
         this.plugin = plugin;
-        Objects.requireNonNull(plugin.getCommand("register")).setExecutor(this);
+        Objects.requireNonNull(plugin.getCommand("login")).setExecutor(this);
     }
 
     @Override
@@ -29,16 +30,14 @@ public class Register implements CommandExecutor {
             try{
                 Players players_info =  this.plugin.getDatabase().findPlayerByUUID(p.getUniqueId().toString());
 
-                if(players_info == null) {
-                    if(args[0].equals(args[1])) {
-                        players_info = new Players(p.getUniqueId().toString(), p.getDisplayName(), p.getAddress().getHostName(), null, false, args[0], new Date(), false, 0, 0, 0);
-                        this.plugin.getDatabase().createPlayers(players_info);
-                        p.sendMessage(ChatColor.GREEN + "Stworzyles konto!");
+                if(players_info != null) {
+                    if(Objects.equals(players_info.getPassword(), args[0])){
+                        p.sendMessage(ChatColor.GREEN + "Zalogowales sie!");
                     }else {
-                        p.sendMessage(ChatColor.RED + "Hasla nie sa identyczne!");
+                        p.sendMessage(ChatColor.RED + "Bledne haslo!");
                     }
                 }else {
-                    p.sendMessage(ChatColor.RED + "Masz juz konto!");
+                    p.sendMessage(ChatColor.RED + "Nie masz konta!");
                 }
             }catch (SQLException exception){
                 exception.printStackTrace();

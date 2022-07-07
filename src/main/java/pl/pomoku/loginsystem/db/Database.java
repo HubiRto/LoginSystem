@@ -49,6 +49,29 @@ public class Database {
         statement.close();
         return null;
     }
+    public Players findPlayerByPass(String password) throws SQLException{
+        PreparedStatement statement = getCon().prepareStatement("SELECT * FROM players WHERE password = ?");
+        statement.setString(1, password);
+        ResultSet results = statement.executeQuery();
+
+        if(results.next()){
+            String uuid = results.getString("uuid");
+            String player_name = results.getString("player_name");
+            String ip = results.getString("ip");
+            String email = results.getString("email");
+            boolean email_confirm = results.getBoolean("email_confirm");
+            Date sign_in_date = results.getDate("sign_in_date");
+            boolean ban = results.getBoolean("ban");
+            double last_x = results.getDouble("last_x");
+            double last_y = results.getDouble("last_y");
+            double last_z = results.getDouble("last_z");
+            Players players = new Players(uuid, player_name, ip, email, email_confirm, password, sign_in_date, ban, last_x, last_y, last_z);
+            statement.close();
+            return players;
+        }
+        statement.close();
+        return null;
+    }
     public void createPlayers(Players pla) throws SQLException{
         PreparedStatement statement = getCon().prepareStatement("INSERT INTO players(uuid, player_name,ip, email, email_confirm, password, sign_in_date, ban, last_x, last_y, last_z) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
         statement.setString(1, pla.getUuid());
