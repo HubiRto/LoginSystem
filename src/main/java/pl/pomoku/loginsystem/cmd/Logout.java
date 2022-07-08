@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 public class Logout implements CommandExecutor {
-    public final LoginSystem plugin;
+    private final LoginSystem plugin;
 
     public Logout(LoginSystem plugin) {
         this.plugin = plugin;

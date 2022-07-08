@@ -10,3 +10,4 @@ commands:
   email:
   changepassword:
   logout:
+  pomoc:

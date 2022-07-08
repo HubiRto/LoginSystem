@@ -27,6 +27,7 @@ public final class LoginSystem extends JavaPlugin {
         new Email(this);
         new ChangePassword(this);
         new Logout(this);
+        new Help(this);
 
         getServer().getPluginManager().registerEvents(new OnJoin(this), this);
         getServer().getPluginManager().registerEvents(new OnMove(this), this);
