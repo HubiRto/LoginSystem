@@ -18,7 +18,6 @@ public final class LoginSystem extends JavaPlugin {
         saveDefaultConfig();
         this.database = new Database(
                 getConfig().getString("database.host"),
-                getConfig().getString("database.port"),
                 getConfig().getString("database.user"),
                 getConfig().getString("database.password"),
                 getConfig().getString("database.database_name"),

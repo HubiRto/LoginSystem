@@ -1,15 +1,12 @@
 package pl.pomoku.loginsystem.cmd;
 
 import com.google.common.hash.Hashing;
-import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 import pl.pomoku.loginsystem.LoginSystem;
 import pl.pomoku.loginsystem.events.OnJoin;
@@ -17,7 +14,6 @@ import pl.pomoku.loginsystem.models.Players;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -47,9 +43,7 @@ public class Login implements CommandExecutor {
                                 location.setX(players_info.getLast_x());
                                 location.setY(players_info.getLast_y());
                                 location.setZ(players_info.getLast_z());
-                                if(location != null) {
-                                    p.teleport(location);
-                                }
+                                p.teleport(location);
 
                                 p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Zostales pomyslnie zalogowany.");
                                 p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Nacisnij klawisz " + ChatColor.GRAY + "SHIFT" + ChatColor.GREEN + ", aby zapamietac logowanie na " + ChatColor.GRAY + "3 dni" + ChatColor.GREEN + ".");

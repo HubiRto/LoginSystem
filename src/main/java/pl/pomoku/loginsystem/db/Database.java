@@ -10,15 +10,13 @@ import static org.bukkit.Bukkit.getServer;
 public class Database {
 
     private final String HOST;
-    private final String PORT;
     private final String USER;
     private final String PASSWORD;
     private final String DATABASE_NAME;
     private final String TYPE;
 
-    public Database(String HOST, String PORT, String USER, String PASSWORD, String DATABASE_NAME, String TYPE) {
+    public Database(String HOST, String USER, String PASSWORD, String DATABASE_NAME, String TYPE) {
         this.HOST = HOST;
-        this.PORT = PORT;
         this.USER = USER;
         this.PASSWORD = PASSWORD;
         this.DATABASE_NAME = DATABASE_NAME;
@@ -55,29 +53,6 @@ public class Database {
             String email = results.getString("email");
             boolean email_confirm = results.getBoolean("email_confirm");
             String password = results.getString("password");
-            Date sign_in_date = results.getDate("sign_in_date");
-            boolean ban = results.getBoolean("ban");
-            double last_x = results.getDouble("last_x");
-            double last_y = results.getDouble("last_y");
-            double last_z = results.getDouble("last_z");
-            Players players = new Players(uuid, player_name, ip, email, email_confirm, password, sign_in_date, ban, last_x, last_y, last_z);
-            statement.close();
-            return players;
-        }
-        statement.close();
-        return null;
-    }
-    public Players findPlayerByPass(String password) throws SQLException{
-        PreparedStatement statement = getCon().prepareStatement("SELECT * FROM players WHERE password = ?");
-        statement.setString(1, password);
-        ResultSet results = statement.executeQuery();
-
-        if(results.next()){
-            String uuid = results.getString("uuid");
-            String player_name = results.getString("player_name");
-            String ip = results.getString("ip");
-            String email = results.getString("email");
-            boolean email_confirm = results.getBoolean("email_confirm");
             Date sign_in_date = results.getDate("sign_in_date");
             boolean ban = results.getBoolean("ban");
             double last_x = results.getDouble("last_x");

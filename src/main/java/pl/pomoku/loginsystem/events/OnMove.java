@@ -20,10 +20,8 @@ public class OnMove implements Listener {
         Player p = e.getPlayer();
         UUID uuid = p.getUniqueId();
 
-        if(uuid != null){
-            if(!OnJoin.LoggedIn.get(uuid)){
-                e.setCancelled(true);
-            }
+        if(!OnJoin.LoggedIn.get(uuid)){
+            e.setCancelled(true);
         }
     }
 }
