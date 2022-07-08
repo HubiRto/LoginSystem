@@ -24,7 +24,7 @@ public class Help implements CommandExecutor {
         if (sender instanceof Player p) {
             if (OnJoin.LoggedIn.get(p.getUniqueId())) {
                 p.sendMessage(" ");
-                p.sendMessage("§8[§b+§8]§m-----------§r§8[ §bLOGIN SYSTEM §8]§m-----------§r§8[§b+§8]");
+                p.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "+" + ChatColor.DARK_GRAY + "]" + ChatColor.STRIKETHROUGH + "-----------" + ChatColor.RESET + "" + ChatColor.DARK_GRAY + "[ " + ChatColor.AQUA + "LOGIN SYSTEM" + ChatColor.DARK_GRAY + " ]" + ChatColor.STRIKETHROUGH + "-----------" + ChatColor.RESET + "" + ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "+" + ChatColor.DARK_GRAY + "]");
                 p.sendMessage(" ");
                 p.sendMessage(ChatColor.DARK_GRAY + " >> " + ChatColor.YELLOW + "/pomoc");
                 p.sendMessage(ChatColor.DARK_GRAY + " >> " + ChatColor.YELLOW + "/login " + ChatColor.DARK_GRAY + "[" + ChatColor.GOLD + "twoje haslo" + ChatColor.DARK_GRAY + "]");
@@ -34,7 +34,7 @@ public class Help implements CommandExecutor {
                 p.sendMessage(ChatColor.DARK_GRAY + " >> " + ChatColor.YELLOW + "/logout");
                 p.sendMessage(ChatColor.DARK_GRAY + " >> " + ChatColor.YELLOW + "/email " + ChatColor.DARK_GRAY + "[" + ChatColor.GOLD + "email" + ChatColor.DARK_GRAY + "]");
                 p.sendMessage(" ");
-                p.sendMessage("§8[§b+§8]§m-----------§r§8[ §bLOGIN SYSTEM §8]§m-----------§r§8[§b+§8]");
+                p.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "+" + ChatColor.DARK_GRAY + "]" + ChatColor.STRIKETHROUGH + "-----------" + ChatColor.RESET + "" + ChatColor.DARK_GRAY + "[ " + ChatColor.AQUA + "LOGIN SYSTEM" + ChatColor.DARK_GRAY + " ]" + ChatColor.STRIKETHROUGH + "-----------" + ChatColor.RESET + "" + ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "+" + ChatColor.DARK_GRAY + "]");
                 p.sendMessage(" ");
             }
         }
