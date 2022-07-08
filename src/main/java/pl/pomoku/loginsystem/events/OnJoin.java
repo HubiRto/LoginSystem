@@ -34,6 +34,7 @@ public class OnJoin implements Listener {
     public void OnPlayerJoin(PlayerJoinEvent e){
         Player p = e.getPlayer();
         UUID uuid = p.getUniqueId();
+
         LoggedIn.put(uuid, false);
         e.setJoinMessage(null);
 

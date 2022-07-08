@@ -1,21 +1,39 @@
 package pl.pomoku.loginsystem.db;
 
+import org.bukkit.ChatColor;
 import pl.pomoku.loginsystem.models.Players;
 
 import java.sql.*;
 
+import static org.bukkit.Bukkit.getServer;
+
 public class Database {
+
+    private final String HOST;
+    private final String PORT;
+    private final String USER;
+    private final String PASSWORD;
+    private final String DATABASE_NAME;
+    private final String TYPE;
+
+    public Database(String HOST, String PORT, String USER, String PASSWORD, String DATABASE_NAME, String TYPE) {
+        this.HOST = HOST;
+        this.PORT = PORT;
+        this.USER = USER;
+        this.PASSWORD = PASSWORD;
+        this.DATABASE_NAME = DATABASE_NAME;
+        this.TYPE = TYPE;
+    }
+
     private Connection con;
     public Connection getCon() throws SQLException{
         if(con != null){
             return con;
         }
-        String url = "jdbc:mysql://localhost/users";
-        String user = "root";
-        String password = "";
+        String url = "jdbc:" + this.TYPE + "://" + this.HOST + "/" + this.DATABASE_NAME;
 
-        this.con = DriverManager.getConnection(url, user, password);
-        System.out.println("Connected to the Users Database.");
+        this.con = DriverManager.getConnection(url, this.USER, this.PASSWORD);
+        getServer().getConsoleSender().sendMessage(ChatColor.GREEN + " >> Connected to the Users Database.");
 
         return this.con;
     }
@@ -24,7 +42,7 @@ public class Database {
         String sql = "CREATE TABLE IF NOT EXISTS players(uuid varchar(36) primary key, player_name TEXT, ip TEXT, email TEXT, email_confirm BOOLEAN, password TEXT, sign_in_date DATE, ban BOOLEAN, last_x DOUBLE, last_y DOUBLE, last_z DOUBLE)";
         statement.execute(sql);
         statement.close();
-        System.out.println("Create the players table in the database.");
+        getServer().getConsoleSender().sendMessage(ChatColor.GREEN + " >> Create the players table in the database.");
     }
     public Players findPlayerByUUID(String uuid) throws SQLException{
         PreparedStatement statement = getCon().prepareStatement("SELECT * FROM players WHERE uuid = ?");
