@@ -1,9 +1,7 @@
 package pl.pomoku.loginsystem;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import pl.pomoku.loginsystem.cmd.Email;
-import pl.pomoku.loginsystem.cmd.Login;
-import pl.pomoku.loginsystem.cmd.Register;
+import pl.pomoku.loginsystem.cmd.*;
 import pl.pomoku.loginsystem.db.Database;
 import pl.pomoku.loginsystem.events.OnJoin;
 import pl.pomoku.loginsystem.events.OnMove;
@@ -27,6 +25,8 @@ public final class LoginSystem extends JavaPlugin {
         new Register(this);
         new Login(this);
         new Email(this);
+        new ChangePassword(this);
+        new Logout(this);
 
         getServer().getPluginManager().registerEvents(new OnJoin(this), this);
         getServer().getPluginManager().registerEvents(new OnMove(this), this);
