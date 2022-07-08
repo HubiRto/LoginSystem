@@ -53,8 +53,7 @@ public class Login implements CommandExecutor {
 
                                 p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Zostales pomyslnie zalogowany.");
                                 p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Nacisnij klawisz " + ChatColor.GRAY + "SHIFT" + ChatColor.GREEN + ", aby zapamietac logowanie na " + ChatColor.GRAY + "3 dni" + ChatColor.GREEN + ".");
-                                p.removePotionEffect(PotionEffectType.BLINDNESS);
-                                p.resetTitle();
+
                                 OnJoin.LoggedIn.put(uuid, true);
                             } else {
                                 p.kickPlayer(ChatColor.RED + "Haslo jest nieprawidlowe.");

@@ -36,16 +36,13 @@ public class OnJoin implements Listener {
         UUID uuid = p.getUniqueId();
         LoggedIn.put(uuid, false);
         e.setJoinMessage(null);
-        p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 2000, 10));
 
         try{
             Players players_info =  this.plugin.getDatabase().findPlayerByUUID(p.getUniqueId().toString());
 
             if(players_info == null){
-                p.sendTitle(ChatColor.RED + "Rejestracja", ChatColor.GRAY + "/register <twoje haslo> <powtorz haslo>",1, 2000,1);
                 p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "Zarejestruj sie, uzywajac komendy " + ChatColor.GRAY + "/register <twoje haslo> <powtorz haslo>" + ChatColor.RED + ".");
             }else {
-                p.sendTitle(ChatColor.RED + "Logowanie", ChatColor.GRAY + "/login <twoje haslo>",1, 2000,1);
                 p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "Zaloguj sie, uzywajac komendy " + ChatColor.GRAY + "/login <twoje haslo>" + ChatColor.RED + ".");
             }
         }catch (SQLException exception){

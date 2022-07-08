@@ -7,3 +7,4 @@ description: System logowania na serwer
 commands:
   register:
   login:
+  email:

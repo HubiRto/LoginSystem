@@ -41,8 +41,6 @@ public class Register implements CommandExecutor {
                             this.plugin.getDatabase().createPlayers(players_info);
                             UUID uuid = p.getUniqueId();
                             OnJoin.LoggedIn.put(uuid, true);
-                            p.removePotionEffect(PotionEffectType.BLINDNESS);
-                            p.resetTitle();
                             p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Zostales pomyslnie zarejestrowany.");
                             p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Aby dokonczyc rejestracje, podaj swoj adres email " + ChatColor.GRAY + "/email <email>" + ChatColor.GREEN + ".");
                         } else {
