@@ -50,6 +50,7 @@ public final class LoginSystem extends JavaPlugin {
         new ChangePassword(this);
         new Logout(this);
         new Help(this);
+        new Remember(this);
     }
 
     private void StartMessage() {

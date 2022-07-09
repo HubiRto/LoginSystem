@@ -37,7 +37,7 @@ public class Database {
     }
     public void initializeDatabase() throws SQLException{
         Statement statement = getCon().createStatement();
-        String sql = "CREATE TABLE IF NOT EXISTS players(uuid varchar(36) primary key, player_name TEXT, ip TEXT, email TEXT, email_confirm BOOLEAN, password TEXT, sign_in_date DATE, ban BOOLEAN, last_x DOUBLE, last_y DOUBLE, last_z DOUBLE)";
+        String sql = "CREATE TABLE IF NOT EXISTS players(uuid varchar(36) primary key, player_name TEXT, ip TEXT, email TEXT, email_confirm BOOLEAN, password TEXT, sign_in_date DATE, ban BOOLEAN, last_x DOUBLE, last_y DOUBLE, last_z DOUBLE, rem_password BOOLEAN, expiry_date DATE)";
         statement.execute(sql);
         statement.close();
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN + " >> Create the players table in the database.");
@@ -58,7 +58,9 @@ public class Database {
             double last_x = results.getDouble("last_x");
             double last_y = results.getDouble("last_y");
             double last_z = results.getDouble("last_z");
-            Players players = new Players(uuid, player_name, ip, email, email_confirm, password, sign_in_date, ban, last_x, last_y, last_z);
+            boolean rem_password = results.getBoolean("rem_password");
+            Date expiry_date = results.getDate("expiry_date");
+            Players players = new Players(uuid, player_name, ip, email, email_confirm, password, sign_in_date, ban, last_x, last_y, last_z, rem_password, expiry_date);
             statement.close();
             return players;
         }
@@ -66,7 +68,7 @@ public class Database {
         return null;
     }
     public void createPlayers(Players pla) throws SQLException{
-        PreparedStatement statement = getCon().prepareStatement("INSERT INTO players(uuid, player_name,ip, email, email_confirm, password, sign_in_date, ban, last_x, last_y, last_z) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+        PreparedStatement statement = getCon().prepareStatement("INSERT INTO players(uuid, player_name,ip, email, email_confirm, password, sign_in_date, ban, last_x, last_y, last_z, rem_password, expiry_date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
         statement.setString(1, pla.getUuid());
         statement.setString(2, pla.getPlayer_name());
         statement.setString(3, pla.getIp());
@@ -78,12 +80,14 @@ public class Database {
         statement.setDouble(9, pla.getLast_x());
         statement.setDouble(10, pla.getLast_y());
         statement.setDouble(11, pla.getLast_z());
+        statement.setBoolean(12, pla.isRem_password());
+        statement.setDate(13, new Date(pla.getExpiry_date().getTime()));
 
         statement.executeUpdate();
         statement.close();
     }
     public void updatePlayers(Players pla) throws SQLException{
-        PreparedStatement statement = getCon().prepareStatement("UPDATE players SET player_name = ?, ip = ?, email = ?, email_confirm = ?, password = ?, sign_in_date = ?, ban = ?, last_x = ?, last_y = ?, last_z = ? WHERE uuid = ?");
+        PreparedStatement statement = getCon().prepareStatement("UPDATE players SET player_name = ?, ip = ?, email = ?, email_confirm = ?, password = ?, sign_in_date = ?, ban = ?, last_x = ?, last_y = ?, last_z = ?, rem_password = ?, expiry_date = ? WHERE uuid = ?");
 
         statement.setString(1, pla.getPlayer_name());
         statement.setString(2, pla.getIp());
@@ -95,8 +99,10 @@ public class Database {
         statement.setDouble(8, pla.getLast_x());
         statement.setDouble(9, pla.getLast_y());
         statement.setDouble(10, pla.getLast_z());
+        statement.setBoolean(11, pla.isRem_password());
+        statement.setDate(12, new Date(pla.getExpiry_date().getTime()));
 
-        statement.setString(11, pla.getUuid());
+        statement.setString(13, pla.getUuid());
 
         statement.executeUpdate();
         statement.close();

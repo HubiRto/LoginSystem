@@ -40,7 +40,7 @@ public class Register implements CommandExecutor {
                             //Szyfrowanie hasla
                             String sha256hex = Hashing.sha256().hashString(args[0], StandardCharsets.UTF_8).toString();
                             //Wgranie danych do bazy
-                            players_info = new Players(p.getUniqueId().toString(), p.displayName().toString(), Objects.requireNonNull(p.getAddress()).getHostName(), null, false, sha256hex, new Date(), false, 0, 0, 0);
+                            players_info = new Players(p.getUniqueId().toString(), p.displayName().toString(), Objects.requireNonNull(p.getAddress()).getHostName(), null, false, sha256hex, new Date(), false, 0, 0, 0, false, new Date());
                             this.plugin.getDatabase().createPlayers(players_info);
                             //Ustawienie sesji na aktywna
                             OnJoin.LoggedIn.put(uuid, true);

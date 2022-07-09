@@ -92,7 +92,7 @@ public class Players {
         this.last_z = last_z;
     }
 
-    public Players(String uuid, String player_name, String ip, String email, boolean email_confirm, String password, Date sign_in_date, boolean ban, double last_x, double last_y, double last_z) {
+    public Players(String uuid, String player_name, String ip, String email, boolean email_confirm, String password, Date sign_in_date, boolean ban, double last_x, double last_y, double last_z, boolean rem_password, Date expiry_date) {
         this.uuid = uuid;
         this.player_name = player_name;
         this.ip = ip;
@@ -104,6 +104,8 @@ public class Players {
         this.last_x = last_x;
         this.last_y = last_y;
         this.last_z = last_z;
+        this.rem_password = rem_password;
+        this.expiry_date = expiry_date;
     }
 
     private String uuid;
@@ -117,4 +119,23 @@ public class Players {
     private double last_x;
     private double last_y;
     private double last_z;
+
+    public boolean isRem_password() {
+        return rem_password;
+    }
+
+    public void setRem_password(boolean rem_password) {
+        this.rem_password = rem_password;
+    }
+
+    public Date getExpiry_date() {
+        return expiry_date;
+    }
+
+    public void setExpiry_date(Date expiry_date) {
+        this.expiry_date = expiry_date;
+    }
+
+    private boolean rem_password;
+    private Date expiry_date;
 }

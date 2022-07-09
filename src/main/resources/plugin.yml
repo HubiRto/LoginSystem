@@ -11,3 +11,4 @@ commands:
   changepassword:
   logout:
   pomoc:
+  remember:

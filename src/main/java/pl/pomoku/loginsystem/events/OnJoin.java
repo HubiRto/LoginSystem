@@ -13,6 +13,8 @@ import pl.pomoku.loginsystem.models.Players;
 
 import java.sql.SQLException;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -40,7 +42,19 @@ public class OnJoin implements Listener {
             if(players_info == null){
                 p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "Zarejestruj sie, uzywajac komendy " + ChatColor.GRAY + "/register <twoje haslo> <powtorz haslo>" + ChatColor.RED + ".");
             }else {
-                p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "Zaloguj sie, uzywajac komendy " + ChatColor.GRAY + "/login <twoje haslo>" + ChatColor.RED + ".");
+                String s = ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "Zaloguj sie, uzywajac komendy " + ChatColor.GRAY + "/login <twoje haslo>" + ChatColor.RED + ".";
+                if(players_info.isRem_password()){
+                    if(!isSameDay(new Date(), players_info.getExpiry_date())) {
+                        LoggedIn.put(uuid, true);
+                        p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Zostales automatycznie zalogowany.");
+                    }else {
+                        players_info.setRem_password(false);
+                        this.plugin.getDatabase().updatePlayers(players_info);
+                        p.sendMessage(s);
+                    }
+                }else {
+                    p.sendMessage(s);
+                }
             }
         }catch (SQLException exception){
             exception.printStackTrace();
@@ -53,5 +67,9 @@ public class OnJoin implements Listener {
                 }
             }
         }.runTaskLater(plugin, 20 * 30);
+    }
+    public static boolean isSameDay(Date date1, Date date2) {
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
+        return fmt.format(date1).equals(fmt.format(date2));
     }
 }
