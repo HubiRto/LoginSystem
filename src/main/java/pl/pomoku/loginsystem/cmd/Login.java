@@ -46,7 +46,9 @@ public class Login implements CommandExecutor {
                                 p.teleport(location);
 
                                 p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Zostales pomyslnie zalogowany.");
-                                p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Nacisnij klawisz " + ChatColor.GRAY + "SHIFT" + ChatColor.GREEN + ", aby zapamietac logowanie na " + ChatColor.GRAY + "3 dni" + ChatColor.GREEN + ".");
+                                if(!players_info.isRem_password()) {
+                                    p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Uzyj komendy " + ChatColor.GRAY + "/remember" + ChatColor.GREEN + ", aby zapamietac logowanie na " + ChatColor.GRAY + "3 dni" + ChatColor.GREEN + ".");
+                                }
 
                                 OnJoin.LoggedIn.put(uuid, true);
                             } else {

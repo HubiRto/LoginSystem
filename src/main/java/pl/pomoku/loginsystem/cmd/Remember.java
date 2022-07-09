@@ -23,6 +23,7 @@ public class Remember implements CommandExecutor {
         Objects.requireNonNull(plugin.getCommand("remember")).setExecutor(this);
     }
 
+    private String AutoLogFinalMess = ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Wlaczyles automatyczne logowanie na 3 dni.";
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(sender instanceof Player p){
@@ -30,13 +31,11 @@ public class Remember implements CommandExecutor {
                 Players players_info = this.plugin.getDatabase().findPlayerByUUID(p.getUniqueId().toString());
                 if(players_info != null) {
                     if (OnJoin.LoggedIn.get(p.getUniqueId())) {
+                        players_info.setIp(Objects.requireNonNull(p.getAddress()).getHostName());
                         players_info.setRem_password(true);
-                        Date dt = new Date();
-                        Date to = new Date(dt.getTime() + (1000*60*60*24*3));
-                        //LocalDateTime.from(dt.toInstant()).plusDays(1);
-                        players_info.setExpiry_date(to);
+                        players_info.setExpiry_date(new Date(new Date().getTime() + (1000*60*60*24*3)));
                         this.plugin.getDatabase().updatePlayers(players_info);
-                        p.sendMessage(ChatColor.GREEN + "Wlaczyles automatyczne logowanie na 3 dni.");
+                        p.sendMessage(AutoLogFinalMess);
                     }
                 }
             }catch (SQLException exception){

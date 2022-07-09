@@ -26,6 +26,11 @@ public class Register implements CommandExecutor {
         Objects.requireNonNull(plugin.getCommand("register")).setExecutor(this);
     }
 
+    private String FinalMesPart_1 = ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Zostales pomyslnie zarejestrowany.";
+    private String FinalMesPart_2 = ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Aby dokonczyc rejestracje, podaj swoj adres email " + ChatColor.GRAY + "/email <email>" + ChatColor.GREEN + ".";
+    private String ErrorPasswordsDontMatch = ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "Podane hasla nie zgadzaja sie.";
+    private String ErrorWrongUseOfTheCommand = ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "Prawidlowe uzycie komendy: " + ChatColor.GRAY + "/register <twoje haslo> <powtorz haslo>" + ChatColor.RED + ".";
+    private String ErrorTheAccoutIsAlreadyRegistred = ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "To konto jest juz zarejestrowane, zaloguj sie.";
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(sender instanceof Player p){
@@ -36,26 +41,23 @@ public class Register implements CommandExecutor {
                 if(players_info == null) {
                     if(args.length == 2) {
                         if (args[0].equals(args[1])) {
-
-                            //Szyfrowanie hasla
                             String sha256hex = Hashing.sha256().hashString(args[0], StandardCharsets.UTF_8).toString();
-                            //Wgranie danych do bazy
+
                             players_info = new Players(p.getUniqueId().toString(), p.displayName().toString(), Objects.requireNonNull(p.getAddress()).getHostName(), null, false, sha256hex, new Date(), false, 0, 0, 0, false, new Date());
                             this.plugin.getDatabase().createPlayers(players_info);
-                            //Ustawienie sesji na aktywna
+
                             OnJoin.LoggedIn.put(uuid, true);
 
-                            //Wiadomosc o poprawnej rejestracji
-                            p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Zostales pomyslnie zarejestrowany.");
-                            p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Aby dokonczyc rejestracje, podaj swoj adres email " + ChatColor.GRAY + "/email <email>" + ChatColor.GREEN + ".");
+                            p.sendMessage(FinalMesPart_1);
+                            p.sendMessage(FinalMesPart_2);
                         } else {
-                            p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "Podane hasla nie zgadzaja sie.");
+                            p.sendMessage(ErrorPasswordsDontMatch);
                         }
                     }else {
-                        p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "Prawidlowe uzycie komendy: " + ChatColor.GRAY + "/register <twoje haslo> <powtorz haslo>" + ChatColor.RED + ".");
+                        p.sendMessage(ErrorWrongUseOfTheCommand);
                     }
                 }else {
-                    p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "To konto jest juz zarejestrowane, zaloguj sie.");
+                    p.sendMessage(ErrorTheAccoutIsAlreadyRegistred);
                 }
             }catch (SQLException exception){
                 exception.printStackTrace();

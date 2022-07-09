@@ -14,10 +14,7 @@ import pl.pomoku.loginsystem.models.Players;
 import java.sql.SQLException;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class OnJoin implements Listener {
     private final LoginSystem plugin;
@@ -45,8 +42,15 @@ public class OnJoin implements Listener {
                 String s = ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "Zaloguj sie, uzywajac komendy " + ChatColor.GRAY + "/login <twoje haslo>" + ChatColor.RED + ".";
                 if(players_info.isRem_password()){
                     if(!isSameDay(new Date(), players_info.getExpiry_date())) {
-                        LoggedIn.put(uuid, true);
-                        p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Zostales automatycznie zalogowany.");
+                        if(Objects.equals(players_info.getIp(), Objects.requireNonNull(p.getAddress()).getHostName())) {
+                            LoggedIn.put(uuid, true);
+                            p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Zostales automatycznie zalogowany.");
+                        }else {
+                            players_info.setRem_password(false);
+                            this.plugin.getDatabase().updatePlayers(players_info);
+                            p.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "L" + ChatColor.YELLOW + "S" + ChatColor.RESET + " " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "Zostales wylogowany, poniewaz twoj adres ip sie nie zgadzal.");
+                            p.sendMessage(s);
+                        }
                     }else {
                         players_info.setRem_password(false);
                         this.plugin.getDatabase().updatePlayers(players_info);
