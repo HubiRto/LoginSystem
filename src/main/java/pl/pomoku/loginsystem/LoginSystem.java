@@ -37,6 +37,7 @@ public final class LoginSystem extends JavaPlugin {
         EndMessage();
     }
 
+
     private void EventsLoad() {
         getServer().getPluginManager().registerEvents(new OnJoin(this), this);
         getServer().getPluginManager().registerEvents(new OnMove(this), this);
